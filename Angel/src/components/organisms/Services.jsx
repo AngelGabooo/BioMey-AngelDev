@@ -1,128 +1,252 @@
-// src/components/organisms/Services/Services.jsx
+import React, { useEffect, useRef } from 'react';
+
 const Services = () => {
+  const carouselRef = useRef(null);
+
   const services = [
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="20" width="80" height="60" rx="5" className="fill-blue-600/20 stroke-blue-600 dark:fill-blue-400/20 dark:stroke-blue-400" strokeWidth="2"/>
-          <rect x="20" y="30" width="25" height="15" rx="2" className="fill-blue-600 dark:fill-blue-500"/>
-          <rect x="55" y="30" width="25" height="15" rx="2" className="fill-purple-600 dark:fill-purple-500"/>
-          <rect x="20" y="55" width="60" height="10" rx="2" className="fill-blue-400 dark:fill-blue-300"/>
-        </svg>
-      ),
-      title: "Desarrollo Frontend",
-      description: "Aplicaciones React modernas con interfaces responsivas y optimizadas para SEO",
-      features: ["React.js", "Tailwind CSS", "Responsive Design", "SEO Optimization"]
+      icon: "💻",
+      title: "Aplicaciones Web Escalables",
+      description: "Plataformas que crecen con tu negocio",
+      impact: "+300% conversiones promedio",
+      results: ["Reducción 70% tiempo de carga", "Incremento 250% engagement", "SEO optimizado para top rankings"],
+      gradient: "from-blue-600 to-cyan-500"
     },
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="60" height="60" rx="5" className="fill-green-600/20 stroke-green-600 dark:fill-green-400/20 dark:stroke-green-400" strokeWidth="2"/>
-          <circle cx="35" cy="35" r="8" className="fill-green-600 dark:fill-green-500"/>
-          <circle cx="65" cy="35" r="8" className="fill-green-500 dark:fill-green-400"/>
-          <circle cx="50" cy="65" r="8" className="fill-green-400 dark:fill-green-300"/>
-          <path d="M35 35L50 65M50 65L65 35" className="stroke-green-600 dark:stroke-green-400" strokeWidth="2"/>
-        </svg>
-      ),
-      title: "Desarrollo Backend",
-      description: "APIs robustas y escalables con las mejores prácticas de seguridad",
-      features: ["Node.js", "Python", "Bases de Datos", "APIs REST"]
+      icon: "🚀",
+      title: "Sistemas Backend Robustos",
+      description: "Infraestructura que nunca falla",
+      impact: "99.9% uptime garantizado",
+      results: ["APIs que manejan +1M requests/día", "Escalabilidad automática", "Seguridad nivel empresarial"],
+      gradient: "from-emerald-600 to-green-500"
     },
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="15" y="25" width="70" height="50" rx="5" className="fill-pink-600/20 stroke-pink-600 dark:fill-pink-400/20 dark:stroke-pink-400" strokeWidth="2"/>
-          <circle cx="35" cy="40" r="5" className="fill-pink-600 dark:fill-pink-500"/>
-          <circle cx="50" cy="40" r="5" className="fill-pink-500 dark:fill-pink-400"/>
-          <circle cx="65" cy="40" r="5" className="fill-pink-400 dark:fill-pink-300"/>
-          <rect x="30" y="55" width="40" height="5" rx="2" className="fill-pink-300 dark:fill-pink-200"/>
-          <rect x="35" y="65" width="30" height="5" rx="2" className="fill-pink-200 dark:fill-pink-100"/>
-        </svg>
-      ),
-      title: "Diseño UI/UX",
-      description: "Experiencias de usuario intuitivas que convierten visitantes en clientes",
-      features: ["Figma", "Prototipado", "Design Systems", "User Testing"]
+      icon: "🎨",
+      title: "Experiencias Digitales Premium",
+      description: "Diseños que convierten usuarios en clientes",
+      impact: "+180% tasa de conversión",
+      results: ["Interfaces que generan ventas", "UX optimizada para móviles", "Branding digital impactante"],
+      gradient: "from-purple-600 to-pink-500"
     },
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="15" width="60" height="70" rx="10" className="fill-yellow-600/20 stroke-yellow-600 dark:fill-yellow-400/20 dark:stroke-yellow-400" strokeWidth="2"/>
-          <rect x="30" y="25" width="40" height="30" rx="5" className="fill-yellow-500 dark:fill-yellow-400"/>
-          <circle cx="50" cy="65" r="8" className="fill-yellow-600 dark:fill-yellow-500"/>
-        </svg>
-      ),
-      title: "Apps Móviles",
-      description: "Aplicaciones nativas e híbridas para iOS y Android",
-      features: ["React Native", "Flutter", "App Store", "Google Play"]
+      icon: "📱",
+      title: "Apps Móviles Nativas",
+      description: "Experiencias móviles excepcionales",
+      impact: "4.8★ rating promedio",
+      results: ["Launch en App Store y Google Play", "Performance nativa", "Monetización optimizada"],
+      gradient: "from-orange-500 to-red-500"
     },
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50 20L80 40V80H20V40L50 20Z" className="fill-orange-600/20 stroke-orange-600 dark:fill-orange-400/20 dark:stroke-orange-400" strokeWidth="2"/>
-          <circle cx="50" cy="50" r="15" className="fill-orange-500 dark:fill-orange-400"/>
-          <path d="M50 35V50L60 60" className="stroke-white dark:stroke-gray-800" strokeWidth="2"/>
-        </svg>
-      ),
-      title: "Cloud & DevOps",
-      description: "Infraestructura escalable y pipelines de despliegue automatizados",
-      features: ["AWS", "Docker", "CI/CD", "Serverless"]
+      icon: "☁️",
+      title: "Infraestructura Cloud Avanzada",
+      description: "Tecnología que escala globalmente",
+      impact: "80% reducción en costos",
+      results: ["Deploy automático 24/7", "Monitoreo en tiempo real", "Backup y recuperación"],
+      gradient: "from-indigo-600 to-blue-500"
     },
     {
-      image: (
-        <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="60" height="60" rx="5" className="fill-red-600/20 stroke-red-600 dark:fill-red-400/20 dark:stroke-red-400" strokeWidth="2"/>
-          <rect x="30" y="30" width="15" height="15" rx="2" className="fill-red-500 dark:fill-red-400"/>
-          <rect x="55" y="30" width="15" height="15" rx="2" className="fill-red-400 dark:fill-red-300"/>
-          <rect x="30" y="55" width="40" height="10" rx="2" className="fill-red-300 dark:fill-red-200"/>
-          <circle cx="75" cy="75" r="5" className="fill-red-600 dark:fill-red-500"/>
-        </svg>
-      ),
-      title: "E-commerce",
-      description: "Tiendas online optimizadas para conversión y experiencia móvil",
-      features: ["Shopify", "WooCommerce", "Payment Gateways", "Inventory Management"]
+      icon: "🛒",
+      title: "E-commerce de Alto Rendimiento",
+      description: "Tiendas que venden mientras duermes",
+      impact: "+400% ventas online",
+      results: ["Checkout optimizado", "Integración total con pagos", "Analytics avanzado"],
+      gradient: "from-teal-600 to-green-500"
     }
-  ]
+  ];
+
+  const companies = [
+    { name: "5four", text: "5four" },
+    { name: "WW", text: "WW" },
+    { name: "Zereflab", text: "Zereflab" },
+    { name: "Heymora", text: "heymora" },
+    { name: "Dealpage", text: "Dealpage" },
+    { name: "Nike", text: "Nike" },
+    { name: "Adidas", text: "Adidas" },
+    { name: "Microsoft", text: "Microsoft" },
+    { name: "Spotify", text: "Spotify" },
+    { name: "Shopify", text: "Shopify" },
+    { name: "Google", text: "Google" },
+    { name: "Meta", text: "Meta" },
+    { name: "Tesla", text: "Tesla" },
+    { name: "TEC Monterrey", text: "TEC" },
+    { name: "Universidad Tet", text: "TET" },
+    { name: "Cruz Roja", text: "Cruz Roja" },
+    { name: "BMW", text: "BMW" }
+  ];
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    let animationId;
+    let currentPosition = 0;
+    const speed = 1;
+
+    const animate = () => {
+      currentPosition -= speed;
+      if (Math.abs(currentPosition) >= carousel.scrollWidth / 2) {
+        currentPosition = 0;
+      }
+      carousel.style.transform = `translateX(${currentPosition}px)`;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
 
   return (
-    <section id="servicios" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4 transition-colors duration-300">
-            Servicios Profesionales
+    <section id="servicios" className="py-24 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-blue-950/20 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-green-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 rounded-full mb-8 shadow-lg backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50">
+            <span className="text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text font-bold text-lg">✨ Resultados Comprobados</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-gray-800 via-blue-600 to-purple-600 dark:from-white dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-8 leading-tight">
+            Soluciones que 
+            <span className="block text-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text">
+              Generan Impacto Real
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto transition-colors duration-300">
-            Soluciones digitales completas que transforman ideas en experiencias web excepcionales
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+            Tecnología probada por las mejores empresas del mundo. Resultados medibles desde el día uno.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div key={index} className="group bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900/20 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-blue-500/10">
-              <div className="flex justify-center mb-4">
-                <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300">
-                  {service.image}
+        {/* Companies Trust Carousel */}
+        <div className="mb-24">
+          <p className="text-center text-gray-500 dark:text-gray-400 mb-12 font-semibold text-xl">
+            Empresas que confían en mi trabajo:
+          </p>
+          <div className="relative overflow-hidden bg-gradient-to-r from-gray-900 via-black to-gray-900 text-white py-8 rounded-2xl shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+            <div 
+              ref={carouselRef}
+              className="flex gap-16 whitespace-nowrap"
+              style={{ width: 'max-content' }}
+            >
+              {companies.concat(companies).concat(companies).map((company, index) => (
+                <div key={index} className="inline-flex items-center justify-center px-8 py-4 hover:scale-110 transition-transform duration-300">
+                  <span className="text-white font-bold text-xl tracking-wider opacity-80 hover:opacity-100 transition-opacity duration-300">
+                    {company.text}
+                  </span>
                 </div>
+              ))}
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="bg-black/80 backdrop-blur-sm px-8 py-4 rounded-xl border border-white/20">
+                <span className="text-white font-black text-2xl tracking-wider">
+                  5+ AÑOS DE EXPERIENCIA
+                </span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 text-center">
-                {service.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed text-center transition-colors duration-300">
-                {service.description}
-              </p>
-              <ul className="space-y-2">
-                {service.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-sm text-gray-500 dark:text-gray-400 transition-colors duration-300">
-                    <span className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mr-3 flex-shrink-0 transition-colors duration-300"></span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+            </div>
+            {/* Gradient Overlays */}
+            <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-black to-transparent z-10"></div>
+            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-black to-transparent z-10"></div>
+          </div>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10">
+          {services.map((service, index) => (
+            <div key={index} className="group relative bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden">
+              {/* Animated Background Gradient */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-15 transition-all duration-700`}></div>
+              <div className={`absolute -inset-1 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-700`}></div>
+              
+              {/* Floating Particles Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute top-4 right-4 w-2 h-2 bg-white/60 rounded-full animate-ping"></div>
+                <div className="absolute top-8 left-4 w-1 h-1 bg-white/40 rounded-full animate-pulse delay-300"></div>
+                <div className="absolute bottom-6 right-6 w-1.5 h-1.5 bg-white/50 rounded-full animate-bounce delay-500"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-20">
+                {/* Icon */}
+                <div className="text-6xl mb-8 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 drop-shadow-2xl">
+                  {service.icon}
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-black text-gray-800 dark:text-white mb-6 tracking-tight leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-gray-800 group-hover:to-blue-600 group-hover:bg-clip-text transition-all duration-500">
+                  {service.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg font-medium">
+                  {service.description}
+                </p>
+
+                {/* Impact Badge */}
+                <div className={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${service.gradient} text-white rounded-2xl text-base font-bold mb-8 shadow-lg transform group-hover:scale-110 transition-all duration-500 hover:shadow-2xl`}>
+                  <span className="text-xl mr-3">📈</span>
+                  <span>{service.impact}</span>
+                </div>
+
+                {/* Results */}
+                <div className="space-y-5 mb-8">
+                  {service.results.map((result, idx) => (
+                    <div key={idx} className="flex items-start space-x-4 group/item">
+                      <div className={`w-3 h-3 bg-gradient-to-r ${service.gradient} rounded-full mt-2 flex-shrink-0 group-hover:animate-pulse`}></div>
+                      <span className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium group-hover/item:text-gray-800 dark:group-hover/item:text-white transition-colors duration-300">{result}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* CTA Button */}
+                <button className={`w-full py-4 px-8 bg-gradient-to-r ${service.gradient} text-white rounded-2xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 group-hover:animate-pulse`}>
+                  <span className="flex items-center justify-center">
+                    Ver Casos de Éxito
+                    <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                    </svg>
+                  </span>
+                </button>
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-24">
+          <div className="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-12 shadow-2xl transform hover:scale-[1.02] transition-all duration-500 overflow-hidden">
+            {/* Animated Background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <h3 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
+                ¿Listo para transformar tu negocio?
+              </h3>
+              <p className="text-blue-100 mb-10 text-xl leading-relaxed font-medium max-w-2xl mx-auto">
+                Únete a las empresas que ya están viendo resultados extraordinarios
+              </p>
+              <button className="bg-white text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text px-12 py-5 rounded-2xl font-black text-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-500 hover:-translate-y-2 focus:outline-none focus:ring-4 focus:ring-white/30">
+                <span className="flex items-center justify-center">
+                  Comenzar Proyecto 
+                  <span className="ml-3 text-2xl">🚀</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;
