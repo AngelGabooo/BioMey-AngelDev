@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/organisms/Header';
 import Hero from './components/organisms/Hero';
 import Services from './components/organisms/Services';
+import PricingPlans from './components/organisms/PricingPlans';
 import Portfolio from './components/organisms/Portfolio';
 import Contact from './components/organisms/Contact';
 import Footer from './components/organisms/Footer';
 import TextCarousel from './components/organisms/TextCarousel';
-import DemosPage from './components/organisms/DemosPage'; // Importa la nueva página
+import DemosPage from './components/organisms/DemosPage';
+import NameChangeAlert from './components/organisms/NameChangeAlert'; // Importa el nuevo componente
 
 import './App.css';
 
@@ -52,7 +54,11 @@ function App() {
         <Portfolio />
         <Contact />
       </main>
+              <PricingPlans />
+
       <Footer />
+      
+      <NameChangeAlert /> {/* Agrega la alerta aquí */}
     </>
   );
 

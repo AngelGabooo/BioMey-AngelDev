@@ -23,7 +23,7 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
       title: "Gimnasios FitNestic",
       category: "aplicaciones",
       image: "https://assets-global.website-files.com/6543e662adb839573347e936/6543e662adb839573347e9e9_fitnestic-x-home-v3-top-page-fitness-webflow-template-p-800.png",
-          features: ["Carrito de compras", "Pasarela de pago", "Sistema de inventario", "Diseño responsive"]
+      features: ["Carrito de compras", "Pasarela de pago", "Sistema de inventario", "Diseño responsive"]
     },
     {
       id: 2,
@@ -145,14 +145,14 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
     <div className={isDarkMode ? 'dark' : ''}>
       <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
       
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 pt-24 pb-16">
+      <main className="min-h-screen bg-white dark:bg-black transition-colors duration-300 pt-24 pb-16">
         <div className="container mx-auto px-6">
           {/* Header de la página */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-800 dark:text-white mb-6 transition-colors duration-300">
-              Galería de <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Demostraciones</span>
+            <h1 className="text-5xl font-bold text-black dark:text-white mb-6 transition-colors duration-300">
+              Galería de <span className="text-black dark:text-white underline decoration-2 underline-offset-4">Demostraciones</span>
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed transition-colors duration-300">
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed transition-colors duration-300">
               Explora nuestros proyectos más recientes y descubre cómo podemos transformar tu presencia digital
             </p>
           </div>
@@ -163,10 +163,10 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 border-2 ${
                   selectedCategory === category.id
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-md'
+                    ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white shadow-lg'
+                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 dark:bg-black dark:text-white dark:border-gray-700 dark:hover:bg-gray-900 shadow-md'
                 }`}
               >
                 {category.name}
@@ -177,7 +177,7 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
           {/* Grid de demostraciones */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredDemos.map((demo, index) => (
-              <div key={demo.id} className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+              <div key={demo.id} className="group bg-white dark:bg-black rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl border border-gray-200 dark:border-gray-800 transition-all duration-500 transform hover:-translate-y-2">
                 {/* Video/Imagen */}
                 <div className="relative aspect-video overflow-hidden">
                   <video
@@ -194,18 +194,18 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
                   </video>
                   
                   {/* Overlay con información */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                     <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                       <h3 className="text-xl font-bold text-white mb-2">{demo.title}</h3>
                       <p className="text-gray-200 text-sm mb-4">{demo.description}</p>
                       <div className="flex flex-wrap gap-2">
                         {demo.features.slice(0, 3).map((feature, i) => (
-                          <span key={i} className="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">
+                          <span key={i} className="bg-white text-black text-xs px-3 py-1 rounded-full font-medium">
                             {feature}
                           </span>
                         ))}
                         {demo.features.length > 3 && (
-                          <span className="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">
+                          <span className="bg-white text-black text-xs px-3 py-1 rounded-full font-medium">
                             +{demo.features.length - 3} más
                           </span>
                         )}
@@ -214,7 +214,7 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
                   </div>
 
                   {/* Categoría */}
-                  <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1">
+                  <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm rounded-lg px-3 py-1 border border-white/20">
                     <span className="text-white text-sm font-semibold capitalize">
                       {demo.category}
                     </span>
@@ -223,18 +223,17 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
 
                 {/* Información del demo */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2 transition-colors duration-300">
+                  <h3 className="text-xl font-semibold text-black dark:text-white mb-2 transition-colors duration-300">
                     {demo.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                  <p className="text-gray-700 dark:text-gray-400 mb-4 text-sm">
                     {demo.description}
                   </p>
                   <div className="flex justify-between items-center">
-                    <span className="inline-flex items-center text-sm text-green-600 dark:text-green-400">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <span className="inline-flex items-center text-sm text-black dark:text-white font-medium">
+                      <div className="w-2 h-2 bg-black dark:bg-white rounded-full mr-2"></div>
                       Demo disponible
                     </span>
-                   
                   </div>
                 </div>
               </div>
@@ -245,10 +244,10 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
           {filteredDemos.length === 0 && (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">😢</div>
-              <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              <h3 className="text-2xl font-semibold text-black dark:text-white mb-2">
                 No hay demostraciones en esta categoría
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-700 dark:text-gray-400">
                 Prueba con otra categoría o vuelve más tarde para ver nuevos proyectos.
               </p>
             </div>
