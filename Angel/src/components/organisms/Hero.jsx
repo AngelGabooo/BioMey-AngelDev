@@ -94,7 +94,7 @@ const Hero = () => {
                 <div className="absolute inset-4 sm:inset-6 lg:inset-8 bg-white dark:bg-black border-2 sm:border-3 lg:border-4 border-black dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] dark:sm:shadow-[16px_16px_0px_0px_rgba(255,255,255,1)] lg:shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] dark:lg:shadow-[20px_20px_0px_0px_rgba(255,255,255,1)] flex items-center justify-center group hover:shadow-[25px_25px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[25px_25px_0px_0px_rgba(255,255,255,1)] transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1">
                   <div className="text-center">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 mx-auto bg-black dark:bg-white flex items-center justify-center mb-4 sm:mb-6 lg:mb-8 relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white dark:text-black text-3xl sm:text-4xl lg:text-6xl font-black relative z-10">AG</span>
+                      <span className="text-white dark:text-black text-3xl sm:text-4xl lg:text-6xl font-black relative z-10">BM</span>
                       <div className="absolute inset-0 bg-white dark:bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
                       <span className="absolute inset-0 flex items-center justify-center text-black dark:text-white text-3xl sm:text-4xl lg:text-6xl font-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">AG</span>
                     </div>

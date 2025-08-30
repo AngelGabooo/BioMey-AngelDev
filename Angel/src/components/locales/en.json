@@ -24,5 +24,90 @@
   },
   "textCarousel": {
     "text": "PROFESSIONAL WEBSITE CREATION • CUSTOM E-COMMERCE • DIGITAL SOLUTIONS TAILORED TO YOUR NEEDS • MODERN, ADAPTABLE AND RESULTS-ORIENTED DESIGN"
+  },
+  "services": {
+    "header": {
+      "badge": "✨ PROVEN RESULTS",
+      "title1": "Solutions that",
+      "title2": "Generate Real",
+      "title3": "Impact",
+      "description": "Technology tested by the <strong>world's best companies</strong>. Measurable results from <strong>day one</strong>.",
+      "experience": "5+ YEARS OF EXPERIENCE",
+      "companies": "Companies that <strong>trust</strong> my work:"
+    },
+    "servicesList": [
+      {
+        "icon": "💻",
+        "title": "Scalable Web Applications",
+        "description": "Platforms that grow with your business",
+        "impact": "+300% average conversions",
+        "results": [
+          "70% load time reduction",
+          "250% engagement increase",
+          "SEO optimized for top rankings"
+        ],
+        "cta": "View Success Cases"
+      },
+      {
+        "icon": "🚀",
+        "title": "Robust Backend Systems",
+        "description": "Infrastructure that never fails",
+        "impact": "99.9% uptime guaranteed",
+        "results": [
+          "APIs handling +1M requests/day",
+          "Automatic scalability",
+          "Enterprise-level security"
+        ],
+        "cta": "View Success Cases"
+      },
+      {
+        "icon": "🎨",
+        "title": "Premium Digital Experiences",
+        "description": "Designs that turn users into customers",
+        "impact": "+180% conversion rate",
+        "results": [
+          "Sales-generating interfaces",
+          "Mobile-optimized UX",
+          "Impactful digital branding"
+        ],
+        "cta": "View Success Cases"
+      },
+      {
+        "icon": "📱",
+        "title": "Native Mobile Apps",
+        "description": "Exceptional mobile experiences",
+        "impact": "4.8★ average rating",
+        "results": [
+          "Launch on App Store and Google Play",
+          "Native performance",
+          "Optimized monetization"
+        ],
+        "cta": "View Success Cases"
+      },
+      {
+        "icon": "☁️",
+        "title": "Advanced Cloud Infrastructure",
+        "description": "Technology that scales globally",
+        "impact": "80% cost reduction",
+        "results": [
+          "Automatic 24/7 deployment",
+          "Real-time monitoring",
+          "Backup and recovery"
+        ],
+        "cta": "View Success Cases"
+      },
+      {
+        "icon": "🛒",
+        "title": "High-Performance E-commerce",
+        "description": "Stores that sell while you sleep",
+        "impact": "+400% online sales",
+        "results": [
+          "Optimized checkout",
+          "Full payment integration",
+          "Advanced analytics"
+        ],
+        "cta": "View Success Cases"
+      }
+    ]
   }
 }

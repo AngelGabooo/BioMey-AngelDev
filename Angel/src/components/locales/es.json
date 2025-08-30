@@ -25,4 +25,90 @@
   "textCarousel": {
     "text": "CREACIÓN DE PÁGINAS WEB PROFESIONALES • COMERCIO ELECTRÓNICO PERSONALIZADO • SOLUCIONES DIGITALES HECHAS A TU MEDIDA • DISEÑO MODERNO, ADAPTABLE Y ORIENTADO A RESULTADOS"
   }
+  ,
+  "services": {
+    "header": {
+      "badge": "✨ RESULTADOS COMPROBADOS",
+      "title1": "Soluciones que",
+      "title2": "Generan Impacto",
+      "title3": "Real",
+      "description": "Tecnología probada por las <strong>mejores empresas del mundo</strong>. Resultados medibles desde el <strong>día uno</strong>.",
+      "experience": "5+ AÑOS DE EXPERIENCIA",
+      "companies": "Empresas que <strong>confían</strong> en mi trabajo:"
+    },
+    "servicesList": [
+      {
+        "icon": "💻",
+        "title": "Aplicaciones Web Escalables",
+        "description": "Plataformas que crecen con tu negocio",
+        "impact": "+300% conversiones promedio",
+        "results": [
+          "Reducción 70% tiempo de carga",
+          "Incremento 250% engagement",
+          "SEO optimizado para top rankings"
+        ],
+        "cta": "Ver Casos de Éxito"
+      },
+      {
+        "icon": "🚀",
+        "title": "Sistemas Backend Robustos",
+        "description": "Infraestructura que nunca falla",
+        "impact": "99.9% uptime garantizado",
+        "results": [
+          "APIs que manejan +1M requests/día",
+          "Escalabilidad automática",
+          "Seguridad nivel empresarial"
+        ],
+        "cta": "Ver Casos de Éxito"
+      },
+      {
+        "icon": "🎨",
+        "title": "Experiencias Digitales Premium",
+        "description": "Diseños que convierten usuarios en clientes",
+        "impact": "+180% tasa de conversión",
+        "results": [
+          "Interfaces que generan ventas",
+          "UX optimizada para móviles",
+          "Branding digital impactante"
+        ],
+        "cta": "Ver Casos de Éxito"
+      },
+      {
+        "icon": "📱",
+        "title": "Apps Móviles Nativas",
+        "description": "Experiencias móviles excepcionales",
+        "impact": "4.8★ rating promedio",
+        "results": [
+          "Launch en App Store y Google Play",
+          "Performance nativa",
+          "Monetización optimizada"
+        ],
+        "cta": "Ver Casos de Éxito"
+      },
+      {
+        "icon": "☁️",
+        "title": "Infraestructura Cloud Avanzada",
+        "description": "Tecnología que escala globalmente",
+        "impact": "80% reducción en costos",
+        "results": [
+          "Deploy automático 24/7",
+          "Monitoreo en tiempo real",
+          "Backup y recuperación"
+        ],
+        "cta": "Ver Casos de Éxito"
+      },
+      {
+        "icon": "🛒",
+        "title": "E-commerce de Alto Rendimiento",
+        "description": "Tiendas que venden mientras duermes",
+        "impact": "+400% ventas online",
+        "results": [
+          "Checkout optimizado",
+          "Integración total con pagos",
+          "Analytics avanzado"
+        ],
+        "cta": "Ver Casos de Éxito"
+      }
+    ]
+  }
 }

@@ -12,6 +12,8 @@ import Footer from './components/organisms/Footer';
 import TextCarousel from './components/organisms/TextCarousel';
 import DemosPage from './components/organisms/DemosPage';
 import NameChangeAlert from './components/organisms/NameChangeAlert';
+import About from './components/organisms/About'; // Añadir esta importación
+
 
 import './App.css';
 
@@ -51,11 +53,13 @@ function App() {
       <main className="bg-white dark:bg-gray-900 transition-colors duration-300">
         <Hero />
         <TextCarousel />
+                <About /> {/* Agregar la nueva sección aquí */}
+
         <Services />
         <Portfolio />
+        <PricingPlans /> {/* Movido PricingPlans DENTRO del main, antes de Contact */}
         <Contact />
       </main>
-      <PricingPlans />
       <Footer />
       <NameChangeAlert />
     </>

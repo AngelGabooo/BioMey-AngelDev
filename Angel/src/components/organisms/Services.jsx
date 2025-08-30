@@ -1,64 +1,13 @@
+// src/components/organisms/Services/Services.jsx
 import React, { useEffect, useRef } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Services = () => {
+  const { t } = useLanguage();
   const carouselRef = useRef(null);
 
-  const services = [
-    {
-      icon: "💻",
-      title: "Aplicaciones Web Escalables",
-      description: "Plataformas que crecen con tu negocio",
-      impact: "+300% conversiones promedio",
-      results: ["Reducción 70% tiempo de carga", "Incremento 250% engagement", "SEO optimizado para top rankings"],
-      gradient: "from-gray-900 to-gray-700",
-      bgPattern: "radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%)"
-    },
-    {
-      icon: "🚀",
-      title: "Sistemas Backend Robustos",
-      description: "Infraestructura que nunca falla",
-      impact: "99.9% uptime garantizado",
-      results: ["APIs que manejan +1M requests/día", "Escalabilidad automática", "Seguridad nivel empresarial"],
-      gradient: "from-black to-gray-800",
-      bgPattern: "radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.03) 0%, transparent 50%)"
-    },
-    {
-      icon: "🎨",
-      title: "Experiencias Digitales Premium",
-      description: "Diseños que convierten usuarios en clientes",
-      impact: "+180% tasa de conversión",
-      results: ["Interfaces que generan ventas", "UX optimizada para móviles", "Branding digital impactante"],
-      gradient: "from-gray-800 to-black",
-      bgPattern: "radial-gradient(circle at 50% 80%, rgba(0, 0, 0, 0.04) 0%, transparent 50%)"
-    },
-    {
-      icon: "📱",
-      title: "Apps Móviles Nativas",
-      description: "Experiencias móviles excepcionales",
-      impact: "4.8★ rating promedio",
-      results: ["Launch en App Store y Google Play", "Performance nativa", "Monetización optimizada"],
-      gradient: "from-gray-900 to-gray-600",
-      bgPattern: "radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.06) 0%, transparent 50%)"
-    },
-    {
-      icon: "☁️",
-      title: "Infraestructura Cloud Avanzada",
-      description: "Tecnología que escala globalmente",
-      impact: "80% reducción en costos",
-      results: ["Deploy automático 24/7", "Monitoreo en tiempo real", "Backup y recuperación"],
-      gradient: "from-gray-700 to-gray-900",
-      bgPattern: "radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 50%)"
-    },
-    {
-      icon: "🛒",
-      title: "E-commerce de Alto Rendimiento",
-      description: "Tiendas que venden mientras duermes",
-      impact: "+400% ventas online",
-      results: ["Checkout optimizado", "Integración total con pagos", "Analytics avanzado"],
-      gradient: "from-black to-gray-700",
-      bgPattern: "radial-gradient(circle at 40% 60%, rgba(0, 0, 0, 0.05) 0%, transparent 50%)"
-    }
-  ];
+  // Obtener servicios traducidos
+  const services = t('services.servicesList');
 
   const companies = [
     { name: "5four", text: "5four" },
@@ -79,6 +28,40 @@ const Services = () => {
     { name: "Cruz Roja", text: "Cruz Roja" },
     { name: "BMW", text: "BMW" }
   ];
+
+  // Gradientes y patrones de fondo (no necesitan traducción)
+  const serviceStyles = [
+    {
+      gradient: "from-gray-900 to-gray-700",
+      bgPattern: "radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%)"
+    },
+    {
+      gradient: "from-black to-gray-800",
+      bgPattern: "radial-gradient(circle at 80% 20%, rgba(0, 0, 0, 0.03) 0%, transparent 50%)"
+    },
+    {
+      gradient: "from-gray-800 to-black",
+      bgPattern: "radial-gradient(circle at 50% 80%, rgba(0, 0, 0, 0.04) 0%, transparent 50%)"
+    },
+    {
+      gradient: "from-gray-900 to-gray-600",
+      bgPattern: "radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.06) 0%, transparent 50%)"
+    },
+    {
+      gradient: "from-gray-700 to-gray-900",
+      bgPattern: "radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.02) 0%, transparent 50%)"
+    },
+    {
+      gradient: "from-black to-gray-700",
+      bgPattern: "radial-gradient(circle at 40% 60%, rgba(0, 0, 0, 0.05) 0%, transparent 50%)"
+    }
+  ];
+
+  // Combinar servicios con sus estilos
+  const servicesWithStyles = services.map((service, index) => ({
+    ...service,
+    ...serviceStyles[index]
+  }));
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -105,6 +88,11 @@ const Services = () => {
       }
     };
   }, []);
+
+  // Función para renderizar HTML con etiquetas strong
+  const renderHTML = (htmlString) => {
+    return { __html: htmlString };
+  };
 
   return (
     <section id="servicios" className="py-12 md:py-32 relative overflow-hidden">
@@ -139,7 +127,7 @@ const Services = () => {
             <div className="relative flex items-center space-x-3">
               <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
               <span className="text-black dark:text-white font-black text-sm md:text-lg tracking-wider">
-                ✨ RESULTADOS COMPROBADOS
+                {t('services.header.badge')}
               </span>
               <div className="w-2 h-2 bg-gray-600 dark:bg-gray-300 rounded-full"></div>
             </div>
@@ -147,24 +135,23 @@ const Services = () => {
 
           <h2 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 md:mb-10 leading-none tracking-tight">
             <span className="block text-gray-900 dark:text-white mb-2">
-              Soluciones que
+              {t('services.header.title1')}
             </span>
             <span className="block relative">
               <span className="text-black dark:text-white">
-                Generan Impacto
+                {t('services.header.title2')}
               </span>
               <div className="absolute -inset-2 bg-black/10 dark:bg-white/10 blur-2xl -z-10 rounded-full"></div>
             </span>
             <span className="block text-gray-700 dark:text-gray-300">
-              Real
+              {t('services.header.title3')}
             </span>
           </h2>
 
-          <p className="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 max-w-5xl mx-auto leading-relaxed font-light">
-            Tecnología probada por las <span className="font-bold text-black dark:text-white">mejores empresas del mundo</span>. 
-            <br className="hidden md:block" />
-            Resultados medibles desde el <span className="font-bold text-gray-800 dark:text-gray-200">día uno</span>.
-          </p>
+          <p 
+            className="text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 max-w-5xl mx-auto leading-relaxed font-light"
+            dangerouslySetInnerHTML={renderHTML(t('services.header.description'))}
+          />
         </div>
 
         {/* Simplified Experience Badge */}
@@ -179,7 +166,7 @@ const Services = () => {
                   <div className="w-3 h-3 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
                 </div>
                 <span className="font-black text-lg md:text-xl tracking-widest">
-                  5+ AÑOS DE EXPERIENCIA
+                  {t('services.header.experience')}
                 </span>
                 <div className="flex space-x-2">
                   <div className="w-3 h-3 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
@@ -193,9 +180,10 @@ const Services = () => {
 
         {/* Simplified Companies Carousel */}
         <div className="mb-20 md:mb-32">
-          <p className="text-center text-gray-600 dark:text-gray-300 mb-10 md:mb-16 font-bold text-xl md:text-2xl">
-            Empresas que <span className="text-black dark:text-white">confían</span> en mi trabajo:
-          </p>
+          <p 
+            className="text-center text-gray-600 dark:text-gray-300 mb-10 md:mb-16 font-bold text-xl md:text-2xl"
+            dangerouslySetInnerHTML={renderHTML(t('services.header.companies'))}
+          />
           <div className="relative overflow-hidden rounded-3xl shadow-2xl">
             <div className="absolute inset-0 bg-black dark:bg-white"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-black to-gray-900/90 dark:from-white/90 dark:via-gray-100 dark:to-white/90"></div>
@@ -222,7 +210,7 @@ const Services = () => {
 
         {/* Simplified Services Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
-          {services.map((service, index) => (
+          {servicesWithStyles.map((service, index) => (
             <div 
               key={index} 
               className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-3xl md:rounded-[2rem] p-8 md:p-10 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden hover:border-gray-300/70 dark:hover:border-gray-600/70"
@@ -281,7 +269,7 @@ const Services = () => {
                 <button className={`w-full py-4 md:py-5 px-8 md:px-10 bg-gradient-to-r ${service.gradient} text-white dark:text-black rounded-2xl md:rounded-3xl font-black text-base md:text-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-300/30 relative overflow-hidden`}>
                   <div className="absolute inset-0 bg-white/10 dark:bg-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                   <span className="flex items-center justify-center relative z-10">
-                    <span className="mr-3">Ver Casos de Éxito</span>
+                    <span className="mr-3">{service.cta}</span>
                     <svg className="w-5 h-5 md:w-6 md:h-6 transform group-hover:translate-x-2 transition-all duration-300" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                     </svg>

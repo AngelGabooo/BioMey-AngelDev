@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const PricingPlans = () => {
   const [isChiapasPrice, setIsChiapasPrice] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
+  
   const plans = [
     {
       title: "Página Web Express",
@@ -109,7 +109,8 @@ const PricingPlans = () => {
 
   return (
     <div className={isDarkMode ? 'dark' : ''}>
-      <section className="min-h-screen bg-white dark:bg-black transition-colors duration-500">
+      {/* IMPORTANTE: Agregar el ID aquí para que funcione la navegación */}
+      <section id="pricing-plans" className="min-h-screen bg-white dark:bg-black transition-colors duration-500">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(0,0,0,0.03)_1px,_transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.03)_1px,_transparent_0)] [background-size:24px_24px]"></div>
         
@@ -157,7 +158,7 @@ const PricingPlans = () => {
                   : 'Desarrollo web de clase mundial para empresas visionarias que buscan dominar su mercado digital.'
                 }
               </p>
-
+              
               {/* Toggle Switch */}
               <div className="flex items-center justify-center">
                 <div className="flex items-center bg-black/5 dark:bg-white/5 rounded-2xl p-1 border border-black/10 dark:border-white/10 backdrop-blur-sm">
@@ -183,7 +184,6 @@ const PricingPlans = () => {
                   </button>
                 </div>
               </div>
-
               {isChiapasPrice && (
                 <div className="mt-6 inline-flex items-center px-4 py-2 rounded-full bg-black dark:bg-white text-white dark:text-black text-sm font-medium">
                   <span className="w-2 h-2 bg-white dark:bg-black rounded-full mr-2 animate-pulse"></span>
