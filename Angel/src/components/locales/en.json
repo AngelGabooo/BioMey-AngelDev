@@ -1,0 +1,28 @@
+{
+  "hero": {
+    "badge": "Software Development Engineer",
+    "badgeMobile": "Dev Engineer",
+    "title1": "Web Development",
+    "title2": "Exceptional",
+    "description": "I transform ideas into extraordinary digital experiences. Every line of code is designed to exceed your expectations and elevate your digital presence.",
+    "cta1": "START PROJECT",
+    "cta2": "VIEW PORTFOLIO",
+    "stats": {
+      "projects": "Projects",
+      "satisfaction": "Satisfaction",
+      "support": "Support"
+    },
+    "team": {
+      "angel": "Angel Gabriel Garcia Samayoa",
+      "angelRole": "SOFTWARE DEVELOPMENT ENGINEER",
+      "samuel": "Samuel Morales",
+      "samuelRole": "BACKEND DEVELOPER",
+      "carlos": "Carlos Perez",
+      "carlosRole": "UI/UX DESIGNER",
+      "label": "PROFESSIONAL TEAM"
+    }
+  },
+  "textCarousel": {
+    "text": "PROFESSIONAL WEBSITE CREATION • CUSTOM E-COMMERCE • DIGITAL SOLUTIONS TAILORED TO YOUR NEEDS • MODERN, ADAPTABLE AND RESULTS-ORIENTED DESIGN"
+  }
+}

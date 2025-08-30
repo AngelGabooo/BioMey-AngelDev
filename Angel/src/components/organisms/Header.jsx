@@ -1,11 +1,15 @@
-// src/components/organisms/Header/Header.jsx
+// src/components/organisms/Header/Header.jsx (actualizado)
 import { useState, useRef, useEffect } from 'react'
+import { useLanguage } from '../contexts/LanguageContext' // Importar el hook
 
 const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [mouseX, setMouseX] = useState(0)
   const [scrolled, setScrolled] = useState(false)
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const dockRef = useRef(null)
+  const languageDropdownRef = useRef(null)
+  const { language, changeLanguage } = useLanguage() // Usar el contexto de idioma
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +17,20 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Cerrar dropdown al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setIsLanguageDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
   }, [])
 
   const handleMouseMove = (e) => {
@@ -26,12 +44,15 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     setMouseX(0)
   }
 
-  // Función para manejar el clic en el logo
   const handleLogoClick = (e) => {
     e.preventDefault()
-    // Si estás usando React Router, puedes usar navigate('/')
-    // Si no, puedes usar window.location
     window.location.href = '/'
+  }
+
+  const handleLanguageChange = (newLanguage) => {
+    changeLanguage(newLanguage)
+    setIsLanguageDropdownOpen(false)
+    // Aquí puedes agregar lógica adicional como recargar traducciones
   }
 
   const DockIcon = ({ children, href, onClick, className = "", isSpecial = false }) => {
@@ -75,24 +96,60 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     )
   }
 
-  const ThemeToggle = () => (
-    <button
-      onClick={onToggleDarkMode}
-      className="relative w-12 h-12 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-200/20 to-gray-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-      <div className="relative flex items-center justify-center w-full h-full">
-        {isDarkMode ? (
-          <svg className="w-5 h-5 text-gray-400 transition-transform duration-300 group-hover:rotate-12" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+  // Reemplazar ThemeToggle con LanguageSelector
+  const LanguageSelector = () => (
+    <div className="relative" ref={languageDropdownRef}>
+      <button
+        onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
+        className="relative w-12 h-12 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group overflow-hidden flex items-center justify-center"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-200/20 to-gray-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="relative flex items-center justify-center w-full h-full">
+          <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
           </svg>
-        ) : (
-          <svg className="w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform duration-300 group-hover:-rotate-12" fill="currentColor" viewBox="0 0 24 24">
-            <path fillRule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clipRule="evenodd" />
-          </svg>
-        )}
-      </div>
-    </button>
+        </div>
+      </button>
+      
+      {/* Dropdown de idiomas */}
+      {isLanguageDropdownOpen && (
+        <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 backdrop-blur-xl overflow-hidden z-50">
+          <button
+            onClick={() => handleLanguageChange('es')}
+            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 ${
+              language === 'es' 
+                ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white' 
+                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            <span className={`fi fi-es rounded-sm ${language === 'es' ? 'opacity-100' : 'opacity-70'}`}></span>
+            <span>Español</span>
+            {language === 'es' && (
+              <svg className="w-4 h-4 ml-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </button>
+          
+          <button
+            onClick={() => handleLanguageChange('en')}
+            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 ${
+              language === 'en' 
+                ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white' 
+                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300'
+            }`}
+          >
+            <span className={`fi fi-us rounded-sm ${language === 'en' ? 'opacity-100' : 'opacity-70'}`}></span>
+            <span>English</span>
+            {language === 'en' && (
+              <svg className="w-4 h-4 ml-auto text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </button>
+        </div>
+      )}
+    </div>
   )
 
   return (
@@ -105,7 +162,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
       }`}>
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            {/* Logo - Ahora es un enlace clickeable */}
+            {/* Logo */}
             <a 
               href="/" 
               onClick={handleLogoClick}
@@ -113,18 +170,14 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
               title="Ir a la página principal"
             >
               <div className="relative">
-                {/* Icono principal en blanco y negro */}
                 <div className="w-14 h-14 bg-black dark:bg-white rounded-3xl flex items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-2xl relative overflow-hidden">
-                  {/* Efecto de brillo */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-black/30"></div>
                   
-                  {/* Letras del logo */}
                   <div className="relative z-10 flex flex-col items-center justify-center">
                     <span className="text-white dark:text-black font-black text-sm leading-none tracking-wider transform transition-transform duration-300 group-hover:scale-105">AG</span>
                     <div className="w-4 h-0.5 bg-white/60 dark:bg-black/60 rounded-full mt-0.5 transform transition-all duration-300 group-hover:w-6 group-hover:bg-white/80 dark:group-hover:bg-black/80"></div>
                   </div>
                   
-                  {/* Partículas de fondo animadas */}
                   <div className="absolute inset-0 opacity-20">
                     <div className="absolute top-2 left-2 w-1 h-1 bg-white dark:bg-black rounded-full animate-pulse"></div>
                     <div className="absolute bottom-3 right-3 w-1 h-1 bg-white dark:bg-black rounded-full animate-pulse delay-300"></div>
@@ -132,13 +185,10 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                   </div>
                 </div>
                 
-                {/* Glow effect */}
                 <div className="absolute -inset-2 bg-black dark:bg-white rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 -z-10"></div>
               </div>
               
-              {/* Texto del logo */}
               <div className="flex flex-col space-y-0.5">
-                {/* Título principal */}
                 <div className="flex items-center space-x-1">
                   <span className="text-3xl font-black tracking-tight text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300">
                     BioMey
@@ -146,7 +196,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                   <div className="w-2 h-2 rounded-full bg-black dark:bg-white shadow-lg animate-pulse group-hover:bg-gray-600 dark:group-hover:bg-gray-400 transition-colors duration-300"></div>
                 </div>
                 
-                {/* Subtítulo */}
                 <div className="flex items-center space-x-2">
                   <div className="h-px bg-gradient-to-r from-transparent via-gray-400 dark:via-gray-600 to-transparent w-12 transition-all duration-300 group-hover:w-16 group-hover:via-gray-600 dark:group-hover:via-gray-400"></div>
                   <span className="text-gray-600 dark:text-gray-400 font-semibold text-sm tracking-wide uppercase transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 group-hover:tracking-wider">
@@ -176,7 +225,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                 </a>
               ))}
               
-              <ThemeToggle />
+              <LanguageSelector /> {/* Reemplazado ThemeToggle con LanguageSelector */}
               
               <a 
                 href="#contacto" 
@@ -203,7 +252,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
       }`}>
         <div className="px-6 py-3">
           <div className="flex items-center justify-between">
-            {/* Logo móvil - También clickeable */}
+            {/* Logo móvil */}
             <a 
               href="/" 
               onClick={handleLogoClick}
@@ -230,7 +279,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
               </div>
             </a>
             
-            <ThemeToggle />
+            <LanguageSelector /> {/* Reemplazado ThemeToggle con LanguageSelector */}
           </div>
         </div>
       </header>
@@ -243,7 +292,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          {/* Icono de inicio que también va a la página principal */}
           <DockIcon href="/" onClick={handleLogoClick}>
             <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />

@@ -1,7 +1,10 @@
+// src/components/organisms/TextCarousel/TextCarousel.jsx
 import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const TextCarousel = () => {
-  const text = "CREACIÓN DE PÁGINAS WEB PROFESIONALES • COMERCIO ELECTRÓNICO PERSONALIZADO • SOLUCIONES DIGITALES HECHAS A TU MEDIDA • DISEÑO MODERNO, ADAPTABLE Y ORIENTADO A RESULTADOS";
+  const { t } = useLanguage();
+  const text = t('textCarousel.text');
   
   const styles = `
     @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css');
@@ -164,6 +167,46 @@ const TextCarousel = () => {
       top: 0;
       transform: translateX(-50%);
     }
+
+    /* Modo oscuro */
+    .dark .container-modern {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      box-shadow: 
+        0 10px 40px -10px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .dark .fade-edges {
+      background: linear-gradient(90deg, 
+        rgba(26, 26, 26, 1) 0%, 
+        rgba(26, 26, 26, 0.9) 10%,
+        transparent 25%, 
+        transparent 75%, 
+        rgba(26, 26, 26, 0.9) 90%,
+        rgba(26, 26, 26, 1) 100%
+      );
+    }
+
+    .dark .divider-modern {
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 40%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        rgba(255, 255, 255, 0.1) 60%, 
+        transparent 100%
+      );
+    }
+
+    .dark .divider-modern::before {
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.8);
+    }
+
+    .dark .decoration-corner::before,
+    .dark .decoration-corner::after {
+      background: #fff;
+    }
   `;
 
   return (
@@ -184,12 +227,12 @@ const TextCarousel = () => {
         {/* Primera línea - movimiento hacia la derecha */}
         <div className="position-relative mb-4 overflow-hidden">
           <div className="d-flex text-nowrap animate-marquee-right">
-            <span className="text-dark fs-5 text-bold-elegant d-flex align-items-center">
-              <span className="pulse-dot d-inline-flex align-items-center justify-content-center me-4 rounded-circle bg-dark" style={{ width: '8px', height: '8px' }}></span>
+            <span className="text-dark dark:text-white fs-5 text-bold-elegant d-flex align-items-center">
+              <span className="pulse-dot d-inline-flex align-items-center justify-content-center me-4 rounded-circle bg-dark dark:bg-white" style={{ width: '8px', height: '8px' }}></span>
               {text}
-              <span className="pulse-dot d-inline-flex align-items-center justify-content-center mx-4 rounded-circle bg-dark" style={{ width: '8px', height: '8px' }}></span>
+              <span className="pulse-dot d-inline-flex align-items-center justify-content-center mx-4 rounded-circle bg-dark dark:bg-white" style={{ width: '8px', height: '8px' }}></span>
               {text}
-              <span className="pulse-dot d-inline-flex align-items-center justify-content-center mx-4 rounded-circle bg-dark" style={{ width: '8px', height: '8px' }}></span>
+              <span className="pulse-dot d-inline-flex align-items-center justify-content-center mx-4 rounded-circle bg-dark dark:bg-white" style={{ width: '8px', height: '8px' }}></span>
               {text}
             </span>
           </div>
@@ -203,7 +246,7 @@ const TextCarousel = () => {
         {/* Segunda línea - movimiento hacia la izquierda */}
         <div className="position-relative overflow-hidden">
           <div className="d-flex text-nowrap animate-marquee-left">
-            <span className="text-secondary fs-5 text-elegant d-flex align-items-center" style={{ color: '#495057 !important' }}>
+            <span className="text-secondary dark:text-gray-400 fs-5 text-elegant d-flex align-items-center">
               <span className="pulse-dot d-inline-flex align-items-center justify-content-center me-4 rounded-circle" style={{ width: '6px', height: '6px', backgroundColor: '#6c757d' }}></span>
               {text}
               <span className="pulse-dot d-inline-flex align-items-center justify-content-center mx-4 rounded-circle" style={{ width: '6px', height: '6px', backgroundColor: '#6c757d' }}></span>
@@ -216,10 +259,10 @@ const TextCarousel = () => {
 
         {/* Elementos decorativos flotantes */}
         <div className="position-absolute" style={{ top: '15%', left: '5%', opacity: 0.3 }}>
-          <div className="pulse-dot rounded-circle bg-dark" style={{ width: '3px', height: '3px' }}></div>
+          <div className="pulse-dot rounded-circle bg-dark dark:bg-white" style={{ width: '3px', height: '3px' }}></div>
         </div>
         <div className="position-absolute" style={{ top: '15%', right: '5%', opacity: 0.3 }}>
-          <div className="pulse-dot rounded-circle bg-dark" style={{ width: '3px', height: '3px', animationDelay: '0.5s' }}></div>
+          <div className="pulse-dot rounded-circle bg-dark dark:bg-white" style={{ width: '3px', height: '3px', animationDelay: '0.5s' }}></div>
         </div>
         <div className="position-absolute" style={{ bottom: '15%', left: '8%', opacity: 0.2 }}>
           <div className="pulse-dot rounded-circle bg-secondary" style={{ width: '2px', height: '2px', animationDelay: '1s' }}></div>

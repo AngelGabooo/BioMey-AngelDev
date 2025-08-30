@@ -41,3 +41,22 @@
 .animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out;
 }
+
+/* Banderas para el selector de idioma */
+.fi {
+  background-size: cover;
+  display: inline-block;
+  width: 1.33333333em;
+  line-height: 1em;
+  height: 1em;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.fi-es {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 6'%3E%3Cpath fill='%23C60B1E' d='M0,0H9V6H0Z'/%3E%3Cpath fill='%23FFC400' d='M0,2H9V4H0Z'/%3E%3C/svg%3E");
+}
+
+.fi-us {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'%3E%3Cpath fill='%23bd3d44' d='M0,0V30H60V0Z'/%3E%3Cpath fill='%23fff' d='M0,0L60,30M60,0L0,30' stroke='%23fff' stroke-width='6'/%3E%3Cpath fill='%23fff' d='M0,0L60,30M60,0L0,30' stroke='%23bd3d44' stroke-width='4'/%3E%3Cpath fill='%23192f5d' d='M30,0H60V30H30V0Z'/%3E%3Cpath fill='%23fff' d='M0,0V4H60V0Z M0,8V12H60V8Z M0,16V20H60V16Z M0,24V28H60V24Z M36,0V30H44V0Z'/%3E%3C/svg%3E");
+}

@@ -1,6 +1,7 @@
 // src/App.jsx (actualizado)
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './components/contexts/LanguageContext'; // Importar el provider
 import Header from './components/organisms/Header';
 import Hero from './components/organisms/Hero';
 import Services from './components/organisms/Services';
@@ -10,7 +11,7 @@ import Contact from './components/organisms/Contact';
 import Footer from './components/organisms/Footer';
 import TextCarousel from './components/organisms/TextCarousel';
 import DemosPage from './components/organisms/DemosPage';
-import NameChangeAlert from './components/organisms/NameChangeAlert'; // Importa el nuevo componente
+import NameChangeAlert from './components/organisms/NameChangeAlert';
 
 import './App.css';
 
@@ -54,26 +55,26 @@ function App() {
         <Portfolio />
         <Contact />
       </main>
-              <PricingPlans />
-
+      <PricingPlans />
       <Footer />
-      
-      <NameChangeAlert /> {/* Agrega la alerta aquí */}
+      <NameChangeAlert />
     </>
   );
 
   return (
-    <Router>
-      <div className={isDarkMode ? 'dark' : ''}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route 
-            path="/demostraciones" 
-            element={<DemosPage isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />} 
-          />
-        </Routes>
-      </div>
-    </Router>
+    <LanguageProvider> {/* Envolver con el provider de idioma */}
+      <Router>
+        <div className={isDarkMode ? 'dark' : ''}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route 
+              path="/demostraciones" 
+              element={<DemosPage isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />} 
+            />
+          </Routes>
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
 
