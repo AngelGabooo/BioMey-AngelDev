@@ -151,7 +151,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            © 2024 Angel Dev. Todos los derechos reservados.
+            © 2025 Angel Dev. Todos los derechos reservados.
           </p>
         </div>
       </div>
