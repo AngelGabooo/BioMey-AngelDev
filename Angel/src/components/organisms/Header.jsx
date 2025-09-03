@@ -7,9 +7,21 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [mouseX, setMouseX] = useState(0)
   const [scrolled, setScrolled] = useState(false)
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
   const dockRef = useRef(null)
   const languageDropdownRef = useRef(null)
   const { language, changeLanguage } = useLanguage() // Usar el contexto de idioma
+
+  // Detectar si es un dispositivo táctil
+  useEffect(() => {
+    const checkTouchDevice = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0)
+    }
+    
+    checkTouchDevice()
+    window.addEventListener('resize', checkTouchDevice)
+    return () => window.removeEventListener('resize', checkTouchDevice)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,20 +40,39 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     }
 
     document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
     }
   }, [])
 
   const handleMouseMove = (e) => {
-    if (dockRef.current) {
+    // Solo aplicar el efecto de mouse en dispositivos no táctiles
+    if (!isTouchDevice && dockRef.current) {
       const rect = dockRef.current.getBoundingClientRect()
       setMouseX(e.clientX - rect.left)
     }
   }
 
   const handleMouseLeave = () => {
-    setMouseX(0)
+    // Solo en dispositivos no táctiles
+    if (!isTouchDevice) {
+      setMouseX(0)
+    }
+  }
+
+  // Manejar eventos táctiles
+  const handleTouchStart = () => {
+    if (isTouchDevice) {
+      setMouseX(1) // Activar efecto visual para dispositivos táctiles
+    }
+  }
+
+  const handleTouchEnd = () => {
+    if (isTouchDevice) {
+      setTimeout(() => setMouseX(0), 200) // Desactivar después de un delay
+    }
   }
 
   const handleLogoClick = (e) => {
@@ -59,6 +90,12 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     const iconRef = useRef(null)
     
     const getScale = () => {
+      // En dispositivos táctiles, usar escala fija
+      if (isTouchDevice) {
+        return mouseX > 0 ? 1.2 : 1
+      }
+      
+      // Lógica original para dispositivos con mouse
       if (!iconRef.current || mouseX === 0) return 1
       
       const rect = iconRef.current.getBoundingClientRect()
@@ -80,17 +117,28 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
       ? "bg-black dark:bg-white shadow-lg shadow-black/25 dark:shadow-white/25" 
       : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-700"
 
+    const handleClick = (e) => {
+      if (onClick) {
+        onClick(e)
+      }
+    }
+
     return (
       <a
         ref={iconRef}
         href={href}
-        onClick={onClick}
+        onClick={handleClick}
         className={`${baseClasses} ${backgroundClasses}`}
         style={{
           transform: `scale(${getScale()})`,
         }}
+        // Mejorar la respuesta táctil
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        // Prevenir comportamientos extraños en dispositivos táctiles
+        onTouchCancel={handleTouchEnd}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:from-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 dark:from-black/20"></div>
         {children}
       </a>
     )
@@ -101,9 +149,10 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     <div className="relative" ref={languageDropdownRef}>
       <button
         onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-        className="relative w-12 h-12 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 transition-all duration-300 hover:scale-105 hover:shadow-lg group overflow-hidden flex items-center justify-center"
+        onTouchStart={(e) => e.stopPropagation()}
+        className="relative w-12 h-12 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-lg group overflow-hidden flex items-center justify-center touch-manipulation"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-200/20 to-gray-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-200/20 to-gray-400/20 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300"></div>
         <div className="relative flex items-center justify-center w-full h-full">
           <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
@@ -116,10 +165,11 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 backdrop-blur-xl overflow-hidden z-50">
           <button
             onClick={() => handleLanguageChange('es')}
-            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 ${
+            onTouchStart={(e) => e.stopPropagation()}
+            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 touch-manipulation ${
               language === 'es' 
                 ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white' 
-                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300'
+                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 active:bg-gray-100 dark:active:bg-gray-700'
             }`}
           >
             <span className={`fi fi-es rounded-sm ${language === 'es' ? 'opacity-100' : 'opacity-70'}`}></span>
@@ -133,10 +183,11 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
           
           <button
             onClick={() => handleLanguageChange('en')}
-            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 ${
+            onTouchStart={(e) => e.stopPropagation()}
+            className={`w-full px-4 py-3 text-left flex items-center space-x-2 transition-colors duration-200 touch-manipulation ${
               language === 'en' 
                 ? 'bg-gray-100 dark:bg-gray-700 text-black dark:text-white' 
-                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300'
+                : 'hover:bg-gray-50 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 active:bg-gray-100 dark:active:bg-gray-700'
             }`}
           >
             <span className={`fi fi-us rounded-sm ${language === 'en' ? 'opacity-100' : 'opacity-70'}`}></span>
@@ -215,7 +266,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                 { href: '#sobre-mi', label: 'Sobre mí' },
                 { href: '#servicios', label: 'Servicios' },
                 { href: '#portafolio', label: 'Portafolio' },
-                { href: '#pricing-plans', label: 'Precios' } // Corregido: href cambiado a #pricing-plans
+                { href: '#pricing-plans', label: 'Precios' }
               ].map((item) => (
                 <a 
                   key={item.href}
@@ -227,7 +278,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                 </a>
               ))}
               
-              <LanguageSelector /> {/* Reemplazado ThemeToggle con LanguageSelector */}
+              <LanguageSelector />
               
               <a 
                 href="#contacto" 
@@ -258,7 +309,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
             <a 
               href="/" 
               onClick={handleLogoClick}
-              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
               title="Ir a la página principal"
             >
               <div className="relative">
@@ -283,7 +334,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
               </div>
             </a>
             
-            <LanguageSelector /> {/* Reemplazado ThemeToggle con LanguageSelector */}
+            <LanguageSelector />
           </div>
         </div>
       </header>
@@ -295,6 +346,8 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
           className="flex items-center gap-3 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl rounded-3xl border border-gray-300 dark:border-gray-600 shadow-2xl"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <DockIcon href="/" onClick={handleLogoClick}>
             <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,7 +373,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
             </svg>
           </DockIcon>
 
-          <DockIcon href="#pricing-plans"> {/* Corregido: href cambiado a #pricing-plans */}
+          <DockIcon href="#pricing-plans">
             <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
             </svg>

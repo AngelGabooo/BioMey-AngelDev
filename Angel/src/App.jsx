@@ -1,7 +1,7 @@
 // src/App.jsx (actualizado)
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './components/contexts/LanguageContext'; // Importar el provider
+import { LanguageProvider } from './components/contexts/LanguageContext';
 import Header from './components/organisms/Header';
 import Hero from './components/organisms/Hero';
 import Services from './components/organisms/Services';
@@ -12,8 +12,11 @@ import Footer from './components/organisms/Footer';
 import TextCarousel from './components/organisms/TextCarousel';
 import DemosPage from './components/organisms/DemosPage';
 import NameChangeAlert from './components/organisms/NameChangeAlert';
-import About from './components/organisms/About'; // Añadir esta importación
-
+import About from './components/organisms/About';
+import Testimonials from './components/organisms/Testimonials';
+import FAQ from './components/organisms/FAQ';
+import WorkProcess from './components/organisms/WorkProcess';
+import ChatBot from './components/organisms/ChatBot'; // Importar el chatbot
 
 import './App.css';
 
@@ -53,20 +56,23 @@ function App() {
       <main className="bg-white dark:bg-gray-900 transition-colors duration-300">
         <Hero />
         <TextCarousel />
-                <About /> {/* Agregar la nueva sección aquí */}
-
+        <About />
         <Services />
+        <WorkProcess />
+        <Testimonials />
+        <PricingPlans />
         <Portfolio />
-        <PricingPlans /> {/* Movido PricingPlans DENTRO del main, antes de Contact */}
+        <FAQ />
         <Contact />
       </main>
       <Footer />
       <NameChangeAlert />
+      <ChatBot /> {/* Agregar el chatbot aquí */}
     </>
   );
 
   return (
-    <LanguageProvider> {/* Envolver con el provider de idioma */}
+    <LanguageProvider>
       <Router>
         <div className={isDarkMode ? 'dark' : ''}>
           <Routes>
