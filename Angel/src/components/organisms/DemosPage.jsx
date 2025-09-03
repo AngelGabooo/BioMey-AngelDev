@@ -1,6 +1,5 @@
 // src/pages/DemosPage.jsx
 import React, { useState, useRef, useEffect } from 'react';
-import Header from './Header';
 import Footer from './Footer';
 
 const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
@@ -141,10 +140,14 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
     };
   }, [filteredDemos]);
 
+  // Scroll al inicio al montar el componente
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, []);
+
   return (
     <div className={isDarkMode ? 'dark' : ''}>
-      <Header isDarkMode={isDarkMode} onToggleDarkMode={onToggleDarkMode} />
-      
+      {/* Elimina el Header aquí */}
       <main className="min-h-screen bg-white dark:bg-black transition-colors duration-300 pt-24 pb-16">
         <div className="container mx-auto px-6">
           {/* Header de la página */}
@@ -254,7 +257,6 @@ const DemosPage = ({ isDarkMode, onToggleDarkMode }) => {
           )}
         </div>
       </main>
-
       <Footer />
     </div>
   );

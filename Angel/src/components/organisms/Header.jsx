@@ -340,11 +340,11 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
       </header>
 
       {/* Mobile Floating Dock con scroll horizontal */}
-      <div className="lg:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-full px-2">
+      <div className="lg:hidden fixed bottom-6 left-0 right-0 z-50 px-2">
         <div
           ref={dockRef}
           className="flex items-center gap-3 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl rounded-3xl border border-gray-300 dark:border-gray-600 shadow-2xl overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          style={{ WebkitOverflowScrolling: 'touch', maxWidth: '100vw' }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleTouchStart}
