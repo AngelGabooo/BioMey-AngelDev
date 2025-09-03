@@ -8,6 +8,10 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [scrolled, setScrolled] = useState(false)
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  // Estados para el auto-hide del header móvil
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [headerVisible, setHeaderVisible] = useState(true)
+  
   const dockRef = useRef(null)
   const languageDropdownRef = useRef(null)
   const { language, changeLanguage } = useLanguage() // Usar el contexto de idioma
@@ -23,13 +27,44 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     return () => window.removeEventListener('resize', checkTouchDevice)
   }, [])
 
+  // Efecto para manejar el scroll y auto-hide del header
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      const currentScrollY = window.scrollY
+      
+      // Actualizar estado de scrolled
+      setScrolled(currentScrollY > 20)
+      
+      // Lógica para auto-hide del header móvil
+      if (currentScrollY < 10) {
+        // Si está en la parte superior, siempre mostrar
+        setHeaderVisible(true)
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling hacia abajo y ya pasó de 100px, ocultar
+        setHeaderVisible(false)
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling hacia arriba, mostrar
+        setHeaderVisible(true)
+      }
+      
+      setLastScrollY(currentScrollY)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+
+    // Throttle para mejor performance
+    let ticking = false
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', throttledHandleScroll)
+  }, [lastScrollY])
 
   // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
@@ -205,8 +240,10 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
 
   return (
     <>
-      {/* Desktop Header */}
-      <header className={`sticky top-0 z-50 lg:block hidden transition-all duration-500 ${
+      {/* Desktop Header con Auto-Hide */}
+      <header className={`fixed top-0 left-0 right-0 z-50 lg:block hidden transition-all duration-500 ease-in-out ${
+        headerVisible ? 'translate-y-0' : '-translate-y-full'
+      } ${
         scrolled 
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-gray-800' 
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-transparent'
@@ -297,8 +334,10 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </header>
 
-      {/* Mobile Header */}
-      <header className={`lg:hidden sticky top-0 z-40 transition-all duration-500 ${
+      {/* Mobile Header con Auto-Hide */}
+      <header className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        headerVisible ? 'translate-y-0' : '-translate-y-full'
+      } ${
         scrolled 
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-gray-800' 
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-transparent'

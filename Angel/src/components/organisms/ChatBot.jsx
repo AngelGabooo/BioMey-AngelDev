@@ -12,6 +12,8 @@ const ChatBot = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
+  const [botVisible, setBotVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -366,11 +368,27 @@ const ChatBot = () => {
     });
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < 10) {
+        setBotVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setBotVisible(false); // Oculta el bot al bajar
+      } else if (currentScrollY < lastScrollY) {
+        setBotVisible(true); // Muestra el bot al subir
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
     <>
       {/* Floating Chat Button */}
-      {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-50">
+      {!isOpen && botVisible && (
+        <div className="fixed top-20 right-5 sm:bottom-5 sm:right-5 z-50">
           <button
             onClick={() => setIsOpen(true)}
             className="group relative w-16 h-16 bg-gradient-to-r from-black to-gray-800 hover:from-gray-900 hover:to-black text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all duration-300 overflow-hidden"
