@@ -1,4 +1,3 @@
-// src/App.jsx (actualizado)
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './components/contexts/LanguageContext';
@@ -16,7 +15,7 @@ import About from './components/organisms/About';
 import Testimonials from './components/organisms/Testimonials';
 import FAQ from './components/organisms/FAQ';
 import WorkProcess from './components/organisms/WorkProcess';
-import ChatBot from './components/organisms/ChatBot'; // Importar el chatbot
+import ChatBot from './components/organisms/ChatBot';
 
 import './App.css';
 
@@ -59,15 +58,15 @@ function App() {
         <About />
         <Services />
         <WorkProcess />
+        <Portfolio />
         <Testimonials />
         <PricingPlans />
-        <Portfolio />
         <FAQ />
         <Contact />
       </main>
       <Footer />
       <NameChangeAlert />
-      <ChatBot /> {/* Agregar el chatbot aquí */}
+      <ChatBot />
     </>
   );
 
@@ -79,7 +78,14 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route 
               path="/demostraciones" 
-              element={<DemosPage isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />} 
+              element={
+                <>
+                  <Header isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
+                  <DemosPage isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
+                  <Footer />
+                  <ChatBot />
+                </>
+              } 
             />
           </Routes>
         </div>

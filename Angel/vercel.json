@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/demostraciones",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demostraciones/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}

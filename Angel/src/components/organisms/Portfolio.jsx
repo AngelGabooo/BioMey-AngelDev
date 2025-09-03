@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 const Portfolio = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -378,15 +379,15 @@ const Portfolio = () => {
             ))}
           </div>
 
-          {/* Call to Action */}
+          {/* Call to Action - CORREGIDO: Usando Link en lugar de window.location */}
           <div className="mt-12 lg:mt-16 text-center">
-            <button 
-              onClick={() => window.location.href = '/demostraciones'}
+            <Link
+              to="/demostraciones"
               className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-semibold hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg text-sm lg:text-base"
             >
               <span>Ver Más Demostraciones</span>
               <span className="text-lg">→</span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

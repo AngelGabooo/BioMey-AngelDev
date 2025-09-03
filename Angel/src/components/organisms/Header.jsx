@@ -8,10 +8,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [scrolled, setScrolled] = useState(false)
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
-  // Estados para el auto-hide del header móvil
-  const [lastScrollY, setLastScrollY] = useState(0)
-  const [headerVisible, setHeaderVisible] = useState(true)
-  
   const dockRef = useRef(null)
   const languageDropdownRef = useRef(null)
   const { language, changeLanguage } = useLanguage() // Usar el contexto de idioma
@@ -27,44 +23,13 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     return () => window.removeEventListener('resize', checkTouchDevice)
   }, [])
 
-  // Efecto para manejar el scroll y auto-hide del header
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      
-      // Actualizar estado de scrolled
-      setScrolled(currentScrollY > 20)
-      
-      // Lógica para auto-hide del header móvil
-      if (currentScrollY < 10) {
-        // Si está en la parte superior, siempre mostrar
-        setHeaderVisible(true)
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling hacia abajo y ya pasó de 100px, ocultar
-        setHeaderVisible(false)
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling hacia arriba, mostrar
-        setHeaderVisible(true)
-      }
-      
-      setLastScrollY(currentScrollY)
+      setScrolled(window.scrollY > 20)
     }
-
-    // Throttle para mejor performance
-    let ticking = false
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', throttledHandleScroll)
-  }, [lastScrollY])
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
@@ -240,10 +205,8 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
 
   return (
     <>
-      {/* Desktop Header con Auto-Hide */}
-      <header className={`fixed top-0 left-0 right-0 z-50 lg:block hidden transition-all duration-500 ease-in-out ${
-        headerVisible ? 'translate-y-0' : '-translate-y-full'
-      } ${
+      {/* Desktop Header */}
+      <header className={`sticky top-0 z-50 lg:block hidden transition-all duration-500 ${
         scrolled 
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-gray-800' 
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-transparent'
@@ -334,10 +297,8 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </header>
 
-      {/* Mobile Header con Auto-Hide */}
-      <header className={`lg:hidden fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        headerVisible ? 'translate-y-0' : '-translate-y-full'
-      } ${
+      {/* Mobile Header */}
+      <header className={`lg:hidden sticky top-0 z-40 transition-all duration-500 ${
         scrolled 
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-gray-800' 
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-transparent'
@@ -378,47 +339,42 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </header>
 
-      {/* Mobile Floating Dock */}
-      {headerVisible && (
-        <div className="lg:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-          <div 
-            ref={dockRef}
-            className="flex items-center gap-3 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl rounded-3xl border border-gray-300 dark:border-gray-600 shadow-2xl"
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            <DockIcon href="/" onClick={handleLogoClick}>
-              <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </DockIcon>
-
-            <DockIcon href="#sobre-mi">
-              <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </DockIcon>
-
-            <DockIcon href="#servicios">
-              <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </DockIcon>
-
-            <DockIcon href="#portafolio">
-              <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      {/* Mobile Floating Dock con scroll horizontal */}
+      <div className="lg:hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-full px-2">
+        <div
+          ref={dockRef}
+          className="flex items-center gap-3 p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-2xl rounded-3xl border border-gray-300 dark:border-gray-600 shadow-2xl overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <DockIcon href="/" onClick={handleLogoClick}>
+            <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           </DockIcon>
-
+          <DockIcon href="#sobre-mi">
+            <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </DockIcon>
+          <DockIcon href="#servicios">
+            <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </DockIcon>
+          <DockIcon href="#portafolio">
+            <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </DockIcon>
           <DockIcon href="#pricing-plans">
             <svg className="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
             </svg>
           </DockIcon>
-
           <DockIcon href="#contacto" isSpecial={true}>
             <svg className="w-6 h-6 text-white dark:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 3.26a2 2 0 001.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -426,9 +382,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
           </DockIcon>
         </div>
       </div>
-      )}
     </>
-      
   )
 }
 
