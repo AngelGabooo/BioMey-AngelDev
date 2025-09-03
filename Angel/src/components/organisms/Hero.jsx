@@ -93,10 +93,19 @@ const Hero = () => {
                 {/* Main Card */}
                 <div className="absolute inset-4 sm:inset-6 lg:inset-8 bg-white dark:bg-black border-2 sm:border-3 lg:border-4 border-black dark:border-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] dark:sm:shadow-[16px_16px_0px_0px_rgba(255,255,255,1)] lg:shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] dark:lg:shadow-[20px_20px_0px_0px_rgba(255,255,255,1)] flex items-center justify-center group hover:shadow-[25px_25px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[25px_25px_0px_0px_rgba(255,255,255,1)] transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1">
                   <div className="text-center">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 mx-auto bg-black dark:bg-white flex items-center justify-center mb-4 sm:mb-6 lg:mb-8 relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-white dark:text-black text-3xl sm:text-4xl lg:text-6xl font-black relative z-10">BM</span>
-                      <div className="absolute inset-0 bg-white dark:bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right"></div>
-                      <span className="absolute inset-0 flex items-center justify-center text-black dark:text-white text-3xl sm:text-4xl lg:text-6xl font-black opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">AG</span>
+                    {/* Logo Container */}
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 mx-auto mb-4 sm:mb-6 lg:mb-8 relative overflow-hidden group-hover:scale-110 transition-transform duration-300 border-2 border-black dark:border-white">
+                      <img 
+                        src="/img/bio.jpg" 
+                        alt="BioMey Logo" 
+                        className="w-full h-full object-cover relative z-10"
+                      />
+                      {/* Overlay para el efecto de hover */}
+                      <div className="absolute inset-0 bg-white dark:bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-right z-20"></div>
+                      {/* Logo alternativo en hover (opcional) */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30">
+                        <span className="text-black dark:text-white text-2xl sm:text-3xl lg:text-5xl font-black">AG</span>
+                      </div>
                     </div>
                     <div className="space-y-2 sm:space-y-3">
                       <div className="w-32 sm:w-40 lg:w-48 h-2 sm:h-3 bg-black dark:bg-white mx-auto opacity-80"></div>
@@ -118,10 +127,11 @@ const Hero = () => {
             <div className="flex flex-col items-center gap-6 sm:gap-8 w-full">
               {/* Team Members Cards */}
               <div className="flex items-center gap-3 sm:gap-6 lg:gap-8 justify-center">
-                {/* Main Developer Card - AG */}
+                {/* Main Developer Card - AG con logo */}
                 <div className="group cursor-pointer">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-white dark:bg-black border-2 sm:border-3 lg:border-4 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:sm:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] lg:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:lg:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex items-center justify-center group-hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all duration-300">
-                    <span className="text-black dark:text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-black">AG</span>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 bg-white dark:bg-black border-2 sm:border-3 lg:border-4 border-black dark:border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] dark:sm:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] lg:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:lg:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] flex items-center justify-center group-hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:group-hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                                       <span className="text-black dark:text-white text-sm sm:text-base md:text-lg lg:text-2xl font-black">AG</span>
+
                   </div>
                 </div>
 

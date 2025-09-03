@@ -37,123 +37,137 @@ const NameChangeAlert = () => {
 
   return (
     <div 
-      className={`fixed bottom-8 right-8 z-50 transition-all duration-500 ease-out ${
-        isAnimating ? 'translate-y-6 opacity-0 scale-95' : 'translate-y-0 opacity-100 scale-100'
+      className={`fixed bottom-8 right-8 z-50 transition-all duration-700 ease-out ${
+        isAnimating ? 'translate-y-8 opacity-0 scale-90' : 'translate-y-0 opacity-100 scale-100'
       }`}
       style={{ 
         zIndex: 9999,
         position: 'fixed'
       }}
     >
-      <div className="relative bg-white dark:bg-gray-950 border border-gray-200/50 dark:border-gray-800/50 rounded-2xl shadow-2xl dark:shadow-black/20 backdrop-blur-xl p-0 max-w-md overflow-hidden group hover:shadow-3xl hover:border-gray-300/50 dark:hover:border-gray-700/50 transition-all duration-700">
+      <div className="relative bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl dark:shadow-black/40 backdrop-blur-2xl p-0 max-w-sm overflow-hidden group hover:shadow-3xl hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-700 hover:scale-[1.02]">
         
         {/* Debug indicator - remover después */}
-        <div className="absolute top-3 left-3 w-2 h-2 bg-red-500 rounded-full animate-pulse z-10"></div>
+        <div className="absolute top-4 left-4 w-2 h-2 bg-red-500 rounded-full animate-pulse z-10"></div>
         
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-50/30 to-gray-100/20 dark:via-gray-900/30 dark:to-gray-800/20"></div>
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-300/50 to-transparent dark:via-gray-700/50"></div>
+        {/* Fondo con patrón geométrico sutil */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-20">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-gray-100 to-transparent dark:from-gray-900 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-gray-50 to-transparent dark:from-gray-950 rounded-full blur-2xl"></div>
+        </div>
         
-        {/* Header Section */}
-        <div className="relative bg-gradient-to-r from-gray-50/80 to-gray-100/60 dark:from-gray-900/80 dark:to-gray-800/60 p-6 border-b border-gray-200/30 dark:border-gray-800/30">
-          {/* Close button */}
+        {/* Header minimalista */}
+        <div className="relative p-8 pb-6">
+          {/* Close button moderno */}
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/60 dark:bg-gray-900/60 hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
+            className="absolute top-6 right-6 w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300 hover:scale-110 border border-gray-200 dark:border-gray-700"
           >
-            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          {/* Logo and Title */}
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <div className="w-12 h-12 bg-black dark:bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <span className="text-white dark:text-black font-bold text-sm tracking-widest">BM</span>
+          {/* Logo y título centrados */}
+          <div className="text-center space-y-4">
+            <div className="relative inline-block">
+              <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-lg ring-4 ring-white dark:ring-black group-hover:scale-105 transition-transform duration-500">
+                <img 
+                  src="/img/bio.jpg" 
+                  alt="BioMey Logo" 
+                  className="w-full h-full object-cover"
+                />
+                {/* Overlay sutil */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent dark:from-white/5"></div>
               </div>
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 bg-black dark:bg-white rounded-xl blur-lg opacity-10 -z-10 group-hover:opacity-20 transition-opacity duration-300"></div>
+              
+              {/* Efecto de resplandor */}
+              <div className="absolute inset-0 rounded-2xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl bg-gray-400 dark:bg-gray-600 -z-10"></div>
             </div>
-            <div className="flex-1">
-              <h3 className="text-xl font-semibold text-black dark:text-white mb-1 tracking-tight">
+            
+            <div>
+              <h3 className="text-2xl font-bold text-black dark:text-white mb-2 tracking-tight">
                 Evolución en Progreso
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+              <p className="text-gray-600 dark:text-gray-400 font-medium text-sm">
                 BioMey se está transformando
               </p>
             </div>
           </div>
         </div>
         
+        {/* Divisor elegante */}
+        <div className="px-8">
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-700 to-transparent"></div>
+        </div>
+        
         {/* Content Section */}
-        <div className="relative p-6 space-y-5">
-          {/* Main Message */}
-          <div className="space-y-3">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div className="relative p-8 pt-6 space-y-6">
+          {/* Mensaje principal */}
+          <div className="text-center">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm">
               Estamos trabajando en una nueva identidad y experiencia completamente renovada para ofrecerte un mejor servicio.
             </p>
           </div>
           
-          {/* Maintenance Info Card */}
-          <div className="relative bg-gray-50/80 dark:bg-gray-900/50 rounded-xl p-4 border border-gray-200/50 dark:border-gray-800/50 backdrop-blur-sm">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mt-0.5">
-                <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+          {/* Card de mantenimiento moderna */}
+          <div className="relative bg-gray-50 dark:bg-gray-950 rounded-2xl p-5 border border-gray-200 dark:border-gray-800">
+            <div className="flex items-start space-x-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-black dark:bg-white flex items-center justify-center">
+                <svg className="w-4 h-4 text-white dark:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                </svg>
               </div>
-              <div className="flex-1 space-y-3">
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    Servicios temporalmente limitados
-                  </h4>
-                  <div className="grid grid-cols-1 gap-1.5 text-xs text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                      <span>Cambio de idiomas</span>
+              
+              <div className="flex-1">
+                <h4 className="text-black dark:text-white font-semibold mb-3 text-sm">
+                  Servicios temporalmente limitados
+                </h4>
+                
+                <div className="space-y-2">
+                  {['Cambio de idiomas', 'Funciones interactivas', 'Servicios de contacto'].map((service, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+                      <span className="text-xs text-gray-600 dark:text-gray-400">{service}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                      <span>Funciones interactivas</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                      <span>Servicios de contacto</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                <div className="text-xs text-gray-500 dark:text-gray-500 italic bg-white/50 dark:bg-gray-800/50 rounded-lg px-3 py-2 border border-gray-200/50 dark:border-gray-700/50">
-                  La página permanece online durante las mejoras
+                
+                <div className="mt-4 p-3 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
+                      La página permanece online durante las mejoras
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Status Footer */}
+          {/* Footer moderno */}
           <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-                <div className="absolute inset-0 w-2 h-2 bg-black dark:bg-white rounded-full animate-ping opacity-75"></div>
+                <div className="w-2.5 h-2.5 bg-black dark:bg-white rounded-full"></div>
+                <div className="absolute inset-0 w-2.5 h-2.5 bg-black dark:bg-white rounded-full animate-ping opacity-40"></div>
               </div>
-              <span className="text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
                 En desarrollo activo
               </span>
             </div>
             
-            {/* Modern progress indicator */}
-            <div className="flex items-center space-x-1">
-              <div className="w-8 h-1 bg-black dark:bg-white rounded-full"></div>
-              <div className="w-4 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-              <div className="w-2 h-1 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+            {/* Indicador de progreso minimalista */}
+            <div className="flex items-center space-x-1.5">
+              <div className="w-6 h-0.5 bg-black dark:bg-white rounded-full"></div>
+              <div className="w-3 h-0.5 bg-gray-400 dark:bg-gray-600 rounded-full"></div>
+              <div className="w-1.5 h-0.5 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
             </div>
           </div>
         </div>
 
-        {/* Subtle hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-white/5 dark:to-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
-        
-        {/* Border highlight on hover */}
-        <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-gray-300/30 dark:group-hover:border-gray-600/30 transition-colors duration-500 pointer-events-none"></div>
+        {/* Efecto de hover sutil */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-black/5 dark:from-black/5 dark:to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl"></div>
       </div>
     </div>
   );

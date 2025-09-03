@@ -266,15 +266,7 @@ const Services = () => {
                 </div>
 
                 {/* CTA Button */}
-                <button className={`w-full py-4 md:py-5 px-8 md:px-10 bg-gradient-to-r ${service.gradient} text-white dark:text-black rounded-2xl md:rounded-3xl font-black text-base md:text-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-300/30 relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-white/10 dark:bg-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="flex items-center justify-center relative z-10">
-                    <span className="mr-3">{service.cta}</span>
-                    <svg className="w-5 h-5 md:w-6 md:h-6 transform group-hover:translate-x-2 transition-all duration-300" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
-                    </svg>
-                  </span>
-                </button>
+                
               </div>
             </div>
           ))}

@@ -173,10 +173,12 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                 <div className="w-14 h-14 bg-black dark:bg-white rounded-3xl flex items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-2xl relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-black/30"></div>
                   
-                  <div className="relative z-10 flex flex-col items-center justify-center">
-                    <span className="text-white dark:text-black font-black text-sm leading-none tracking-wider transform transition-transform duration-300 group-hover:scale-105">AG</span>
-                    <div className="w-4 h-0.5 bg-white/60 dark:bg-black/60 rounded-full mt-0.5 transform transition-all duration-300 group-hover:w-6 group-hover:bg-white/80 dark:group-hover:bg-black/80"></div>
-                  </div>
+                  {/* Logo bic.jpg con bordes redondeados */}
+                  <img 
+                    src="/img/bio.jpg" 
+                    alt="BioMey Logo" 
+                    className="w-full h-full object-cover rounded-3xl"
+                  />
                   
                   <div className="absolute inset-0 opacity-20">
                     <div className="absolute top-2 left-2 w-1 h-1 bg-white dark:bg-black rounded-full animate-pulse"></div>
@@ -260,11 +262,13 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
               title="Ir a la página principal"
             >
               <div className="relative">
-                <div className="w-12 h-12 bg-black dark:bg-white rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:rotate-3">
-                  <div className="flex flex-col items-center justify-center">
-                    <span className="text-white dark:text-black font-black text-xs leading-none transition-transform duration-300 group-hover:scale-105">AG</span>
-                    <div className="w-3 h-0.5 bg-white/60 dark:bg-black/60 rounded-full mt-0.5 transition-all duration-300 group-hover:w-4 group-hover:bg-white/80 dark:group-hover:bg-black/80"></div>
-                  </div>
+                <div className="w-12 h-12 bg-black dark:bg-white rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:rotate-3 overflow-hidden">
+                  {/* Logo bic.jpg con bordes redondeados */}
+                  <img 
+                    src="/img/bio.jpg" 
+                    alt="BioMey Logo" 
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
                 </div>
                 <div className="absolute -inset-1 bg-black dark:bg-white rounded-2xl opacity-0 group-hover:opacity-20 blur-lg transition-all duration-300 -z-10"></div>
               </div>

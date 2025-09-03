@@ -2,13 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/jpeg" href="/img/bio.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BioMey</title>
+    <style>
+      .rounded-logo {
+        border-radius: 50%; /* Círculo perfecto */
+        /* O usa: border-radius: 15px; para esquinas suaves */
+        width: 50px; /* Ajusta el tamaño */
+        height: 50px;
+        object-fit: cover; /* Para que la imagen se ajuste bien */
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Si quieres mostrar el logo en tu página -->
+      <img src="/img/bio.jpg" alt="Logo BioMey" class="rounded-logo">
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-

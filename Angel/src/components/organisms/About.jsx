@@ -15,40 +15,58 @@ const About = () => {
       viewCert: "Verificar certificación",
       certs: [
         {
-          title: "ISO 27001:2022 - Gestión de Seguridad de la Información",
+          title: "ISO 27001:2025 - Gestión de Seguridad de la Información",
           issuer: "International Organization for Standardization",
           icon: "🛡️",
-          year: "2023"
+          year: "2022"
         },
         {
           title: "Google Cloud Professional Cloud Architect",
           issuer: "Google Cloud Platform",
           icon: "☁️",
-          year: "2023"
+          year: "2024"
         },
         {
           title: "AWS Solutions Architect Professional",
           issuer: "Amazon Web Services",
           icon: "🏗️",
-          year: "2024"
+          year: "2022"
         },
         {
-          title: "Certified Ethical Hacker (CEH)",
-          issuer: "EC-Council International",
+          title: "Certified Information Systems Security Professional (CISSP)",
+          issuer: "ISC²",
           icon: "🔐",
-          year: "2024"
+          year: "2023"
         },
         {
           title: "Apple iOS Developer Enterprise",
           issuer: "Apple Developer Program",
           icon: "📱",
-          year: "2023"
+          year: "2024"
         },
         {
           title: "Microsoft Azure Solutions Architect Expert",
           issuer: "Microsoft Corporation",
           icon: "🔷",
           year: "2024"
+        },
+        {
+          title: "Kubernetes and Cloud Native Associate (KCNA)",
+          issuer: "Cloud Native Computing Foundation",
+          icon: "☸️",
+          year: "2024"
+        },
+        {
+          title: "Certified AI Engineer Professional",
+          issuer: "Artificial Intelligence Board of America",
+          icon: "🤖",
+          year: "2024"
+        },
+        {
+          title: "Blockchain Solutions Architect",
+          issuer: "Blockchain Training Alliance",
+          icon: "⛓️",
+          year: "2025"
         }
       ],
       clients: "Alianzas Estratégicas y Clientes Corporativos",
@@ -162,40 +180,58 @@ const About = () => {
       viewCert: "Verify certification",
       certs: [
         {
-          title: "ISO 27001:2022 - Information Security Management",
+          title: "ISO 27001:2025 - Information Security Management",
           issuer: "International Organization for Standardization",
           icon: "🛡️",
-          year: "2023"
+          year: "2025"
         },
         {
           title: "Google Cloud Professional Cloud Architect",
           issuer: "Google Cloud Platform",
           icon: "☁️",
-          year: "2023"
+          year: "2025"
         },
         {
           title: "AWS Solutions Architect Professional",
           issuer: "Amazon Web Services",
           icon: "🏗️",
-          year: "2024"
+          year: "2025"
         },
         {
-          title: "Certified Ethical Hacker (CEH)",
-          issuer: "EC-Council International",
+          title: "Certified Information Systems Security Professional (CISSP)",
+          issuer: "ISC²",
           icon: "🔐",
-          year: "2024"
+          year: "2025"
         },
         {
           title: "Apple iOS Developer Enterprise",
           issuer: "Apple Developer Program",
           icon: "📱",
-          year: "2023"
+          year: "2025"
         },
         {
           title: "Microsoft Azure Solutions Architect Expert",
           issuer: "Microsoft Corporation",
           icon: "🔷",
-          year: "2024"
+          year: "2025"
+        },
+        {
+          title: "Kubernetes and Cloud Native Associate (KCNA)",
+          issuer: "Cloud Native Computing Foundation",
+          icon: "☸️",
+          year: "2025"
+        },
+        {
+          title: "Certified AI Engineer Professional",
+          issuer: "Artificial Intelligence Board of America",
+          icon: "🤖",
+          year: "2025"
+        },
+        {
+          title: "Blockchain Solutions Architect",
+          issuer: "Blockchain Training Alliance",
+          icon: "⛓️",
+          year: "2025"
         }
       ],
       clients: "Strategic Partnerships and Corporate Clients",
@@ -308,10 +344,13 @@ const About = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-black dark:bg-white rounded-xl sm:rounded-2xl mb-6 sm:mb-8 shadow-2xl">
-            <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white dark:text-black" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-            </svg>
+          {/* Logo con bordes redondeados */}
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <img 
+              src="/img/bio.jpg" 
+              alt="BioMey Logo" 
+              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-2xl"
+            />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-4 sm:mb-6 tracking-tight px-4">
             {t.title}
@@ -426,12 +465,7 @@ const About = () => {
                       </span>
                     </div>
                   </div>
-                  <button className="w-full text-xs sm:text-sm text-black dark:text-white font-semibold flex items-center justify-center py-2 sm:py-3 px-3 sm:px-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg sm:rounded-xl hover:border-black dark:hover:border-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300 group">
-                    {t.viewCert}
-                    <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
+                  {/* Botón eliminado */}
                 </div>
               </div>
             ))}

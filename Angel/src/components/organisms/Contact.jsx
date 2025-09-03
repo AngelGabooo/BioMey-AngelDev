@@ -73,7 +73,7 @@ const Contact = () => {
         <div className="text-center mb-20">
           <div className="inline-block relative">
             <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-black mb-6 tracking-tight leading-none">
-              Let's Connect
+              Contactanos
             </h2>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-black"></div>
           </div>
