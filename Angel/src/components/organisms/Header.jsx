@@ -1,6 +1,6 @@
-// src/components/organisms/Header/Header.jsx (actualizado)
+// src/components/organisms/Header/Header.jsx (corregido)
 import { useState, useRef, useEffect } from 'react'
-import { useLanguage } from '../contexts/LanguageContext' // Importar el hook
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -8,9 +8,12 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
   const [scrolled, setScrolled] = useState(false)
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false)
   const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [showNav, setShowNav] = useState(true)
   const dockRef = useRef(null)
   const languageDropdownRef = useRef(null)
-  const { language, changeLanguage } = useLanguage() // Usar el contexto de idioma
+  const navRef = useRef(null)
+  const { language, changeLanguage } = useLanguage()
 
   // Detectar si es un dispositivo táctil
   useEffect(() => {
@@ -23,105 +26,135 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
     return () => window.removeEventListener('resize', checkTouchDevice)
   }, [])
 
+  // Controlar visibilidad de la navegación al hacer scroll - VERSIÓN CORREGIDA
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // DEBUG: Mostrar valores en consola
+          console.log('Scroll Y:', currentScrollY, 'Last Scroll Y:', lastScrollY, 'Show Nav:', showNav);
+          
+          // Solo ocultar/mostrar si hay un cambio significativo
+          if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // Scroll hacia abajo - ocultar navegación
+            if (showNav) {
+              console.log('Ocultando navegación');
+              setShowNav(false);
+            }
+          } else if (currentScrollY < lastScrollY || currentScrollY <= 50) {
+            // Scroll hacia arriba o cerca del top - mostrar navegación
+            if (!showNav) {
+              console.log('Mostrando navegación');
+              setShowNav(true);
+            }
+          }
+          
+          setLastScrollY(currentScrollY);
+          setScrolled(currentScrollY > 20);
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    };
+
+    // Usar el evento scroll con passive: true para mejor rendimiento
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY, showNav]); // Añadido showNav como dependencia
 
   // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
-        setIsLanguageDropdownOpen(false)
+        setIsLanguageDropdownOpen(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
 
   const handleMouseMove = (e) => {
-    // Solo aplicar el efecto de mouse en dispositivos no táctiles
     if (!isTouchDevice && dockRef.current) {
-      const rect = dockRef.current.getBoundingClientRect()
-      setMouseX(e.clientX - rect.left)
+      const rect = dockRef.current.getBoundingClientRect();
+      setMouseX(e.clientX - rect.left);
     }
-  }
+  };
 
   const handleMouseLeave = () => {
-    // Solo en dispositivos no táctiles
     if (!isTouchDevice) {
-      setMouseX(0)
+      setMouseX(0);
     }
-  }
+  };
 
-  // Manejar eventos táctiles
   const handleTouchStart = () => {
     if (isTouchDevice) {
-      setMouseX(1) // Activar efecto visual para dispositivos táctiles
+      setMouseX(1);
     }
-  }
+  };
 
   const handleTouchEnd = () => {
     if (isTouchDevice) {
-      setTimeout(() => setMouseX(0), 200) // Desactivar después de un delay
+      setTimeout(() => setMouseX(0), 200);
     }
-  }
+  };
 
   const handleLogoClick = (e) => {
-    e.preventDefault()
-    window.location.href = '/'
-  }
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleLanguageChange = (newLanguage) => {
-    changeLanguage(newLanguage)
-    setIsLanguageDropdownOpen(false)
-    // Aquí puedes agregar lógica adicional como recargar traducciones
-  }
+    changeLanguage(newLanguage);
+    setIsLanguageDropdownOpen(false);
+  };
 
   const DockIcon = ({ children, href, onClick, className = "", isSpecial = false }) => {
-    const iconRef = useRef(null)
+    const iconRef = useRef(null);
     
     const getScale = () => {
-      // En dispositivos táctiles, usar escala fija
       if (isTouchDevice) {
-        return mouseX > 0 ? 1.2 : 1
+        return mouseX > 0 ? 1.2 : 1;
       }
       
-      // Lógica original para dispositivos con mouse
-      if (!iconRef.current || mouseX === 0) return 1
+      if (!iconRef.current || mouseX === 0) return 1;
       
-      const rect = iconRef.current.getBoundingClientRect()
-      const dockRect = dockRef.current?.getBoundingClientRect()
-      if (!dockRect) return 1
+      const rect = iconRef.current.getBoundingClientRect();
+      const dockRect = dockRef.current?.getBoundingClientRect();
+      if (!dockRect) return 1;
       
-      const iconCenter = rect.left + rect.width / 2 - dockRect.left
-      const distance = Math.abs(mouseX - iconCenter)
-      const maxDistance = 80
+      const iconCenter = rect.left + rect.width / 2 - dockRect.left;
+      const distance = Math.abs(mouseX - iconCenter);
+      const maxDistance = 80;
       
-      if (distance > maxDistance) return 1
-      const scale = 1 + (1 - distance / maxDistance) * 0.6
-      return Math.min(scale, 1.8)
-    }
+      if (distance > maxDistance) return 1;
+      const scale = 1 + (1 - distance / maxDistance) * 0.6;
+      return Math.min(scale, 1.8);
+    };
 
-    const baseClasses = `flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 hover:scale-110 group relative overflow-hidden ${className}`
+    const baseClasses = `flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 hover:scale-110 group relative overflow-hidden ${className}`;
     
     const backgroundClasses = isSpecial 
       ? "bg-black dark:bg-white shadow-lg shadow-black/25 dark:shadow-white/25" 
-      : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-700"
+      : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-300 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-700";
 
     const handleClick = (e) => {
       if (onClick) {
-        onClick(e)
+        onClick(e);
       }
-    }
+    };
 
     return (
       <a
@@ -132,19 +165,16 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         style={{
           transform: `scale(${getScale()})`,
         }}
-        // Mejorar la respuesta táctil
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        // Prevenir comportamientos extraños en dispositivos táctiles
         onTouchCancel={handleTouchEnd}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 dark:from-black/20"></div>
         {children}
       </a>
-    )
-  }
+    );
+  };
 
-  // Reemplazar ThemeToggle con LanguageSelector
   const LanguageSelector = () => (
     <div className="relative" ref={languageDropdownRef}>
       <button
@@ -160,7 +190,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </button>
       
-      {/* Dropdown de idiomas */}
       {isLanguageDropdownOpen && (
         <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 backdrop-blur-xl overflow-hidden z-50">
           <button
@@ -201,7 +230,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       )}
     </div>
-  )
+  );
 
   return (
     <>
@@ -224,7 +253,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
                 <div className="w-14 h-14 bg-black dark:bg-white rounded-3xl flex items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:shadow-2xl relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 dark:from-black/30"></div>
                   
-                  {/* Logo bic.jpg con bordes redondeados */}
                   <img 
                     src="/img/bio.jpg" 
                     alt="BioMey Logo" 
@@ -259,8 +287,15 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
               </div>
             </a>
 
-            {/* Desktop Navigation */}
-            <nav className="flex items-center space-x-1">
+            {/* Desktop Navigation - Ahora con mejor control de visibilidad */}
+            <nav 
+              ref={navRef}
+              className={`flex items-center space-x-1 transition-all duration-300 ${
+                showNav 
+                  ? 'opacity-100 translate-y-0 visible' 
+                  : 'opacity-0 -translate-y-4 invisible'
+              }`}
+            >
               {[
                 { href: '#inicio', label: 'Inicio' },
                 { href: '#sobre-mi', label: 'Sobre mí' },
@@ -297,7 +332,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </header>
 
-      {/* Mobile Header */}
+      {/* Mobile Header - Sin cambios */}
       <header className={`lg:hidden sticky top-0 z-40 transition-all duration-500 ${
         scrolled 
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border-b border-gray-200 dark:border-gray-800' 
@@ -314,7 +349,6 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
             >
               <div className="relative">
                 <div className="w-12 h-12 bg-black dark:bg-white rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:rotate-3 overflow-hidden">
-                  {/* Logo bic.jpg con bordes redondeados */}
                   <img 
                     src="/img/bio.jpg" 
                     alt="BioMey Logo" 
@@ -339,7 +373,7 @@ const Header = ({ isDarkMode, onToggleDarkMode }) => {
         </div>
       </header>
 
-      {/* Mobile Floating Dock con scroll horizontal */}
+      {/* Mobile Floating Dock */}
       <div className="lg:hidden fixed bottom-6 left-0 right-0 z-50 px-2">
         <div
           ref={dockRef}
